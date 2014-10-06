@@ -235,6 +235,8 @@ func (m *Manager) GenerateProxyConfig(isKillEvent bool) (*interlock.ProxyConfig,
 					addr = fmt.Sprintf("%s:%d", host, p.Port)
 				}
 			}
+		} else {
+			addr = fmt.Sprintf("%s:%d", host, 80)
 		}
 		up := &interlock.Upstream{
 			Addr:          addr,
