@@ -169,9 +169,6 @@ func (m *Manager) GenerateProxyConfig(isKillEvent bool) (*interlock.ProxyConfig,
 	hostChecks := map[string]string{}
 	hostBackendOptions := map[string][]string{}
 	for _, cnt := range containers {
-		if cnt.Image.Domainname == "" {
-			continue
-		}
 		cntId := cnt.ID[:12]
 		// load interlock data
 		env := cnt.Image.Environment
@@ -184,6 +181,15 @@ func (m *Manager) GenerateProxyConfig(isKillEvent bool) (*interlock.ProxyConfig,
 		}
 		hostname := cnt.Image.Hostname
 		domain := cnt.Image.Domainname
+		if interlockData.Hostname != "" {
+			hostname = interlockData.Hostname
+		}
+		if interlockData.Domain != "" {
+			domain = interlockData.Domain
+		}
+		if domain == "" {
+			continue
+		}
 		if hostname != domain && hostname != "" {
 			domain = fmt.Sprintf("%s.%s", hostname, domain)
 		}

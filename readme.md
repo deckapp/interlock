@@ -52,6 +52,10 @@ To start Interlock using the Shipyard API:
 
 `docker run -it -p 80:8080 -d ehazlett/interlock -shipyard-url <your-shipyard-url> -shipyard-service-key <your-shipyard-service-key>`
 
+To start Interlock using the Shipyard API in a local host only setup:
+
+`docker run -it -p 80:8080 -d -v /var/run/docker.sock:/docker.sock ehazlett/interlock -shipyard-url <your-shipyard-url> -shipyard-service-key <your-shipyard-service-key>`
+
 Interlock will query the Shipyard API for a list of engines and then automatically connect and start listening for events.
 
 # Optional Data
@@ -59,6 +63,8 @@ There is also the ability to send configuration data when running containers.  T
 
 ## Data Fields
 
+* `hostname`: override the container hostname -- this is the combined with the domain to create the endpoint
+* `domain`: override the container domain
 * `alias_domains`: specify a list of alias domains to add (`{"alias_domains": ["foo.com", "bar.com"]}`)
 * `port`: specify which container port to use for backend (`{"port": 8080}`)
 * `warm`: connect to the container before adding to the backend (`{"warm": true}`)
